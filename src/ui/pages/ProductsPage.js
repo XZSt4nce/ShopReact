@@ -33,7 +33,11 @@ const ProductsPage = () => {
 
     return (
         <div className={"wrapper"}>
-            <header>{"Products"}</header>
+            <header>
+                <div id={"header-decoration"}>
+                    {"Products"}
+                </div>
+            </header>
             <div id={"products-container"} className={"container"}>
                 {visibleProducts.map((el, idx) => (
                     <Product key={idx} product={el}></Product>

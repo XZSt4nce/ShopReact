@@ -2,13 +2,21 @@ header {
     width: 100%;
     height: 100px;
     text-align: center;
-    background: white;
     box-sizing: border-box;
-    padding: 10px;
-    border: 5px solid rebeccapurple;
+    background:  #1400d0;
     line-height: 70px;
     font-size: 30px;
     font-weight: bold;
+}
+
+#header-decoration {
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+    border: 5px solid #1400d0;
+    background: white;
+    border-radius: 20px;
 }
 
 .wrapper {

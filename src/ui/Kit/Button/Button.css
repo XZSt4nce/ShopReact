@@ -8,13 +8,14 @@ button {
     background: white;
     box-sizing: border-box;
     padding: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
 }
 
 .pr {
-    background: rebeccapurple;
+    background: #1400d0;
     color: white;
 }
 
 .sec {
-    border: 3px solid rebeccapurple;
+    border: 3px solid #1400d0;
 }
