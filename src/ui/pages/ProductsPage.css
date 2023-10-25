@@ -3,7 +3,7 @@ header {
     height: 100px;
     text-align: center;
     box-sizing: border-box;
-    background:  #1400d0;
+    background:  #6270ea;
     line-height: 70px;
     font-size: 30px;
     font-weight: bold;
@@ -14,7 +14,7 @@ header {
     height: 100%;
     box-sizing: border-box;
     padding: 10px;
-    border: 5px solid #1400d0;
+    border: 5px solid #6270ea;
     background: white;
     border-radius: 20px;
 }
@@ -22,7 +22,7 @@ header {
 .wrapper {
     width: 100vw;
     height: 100vh;
-    background: #e799ff;
+    background: #d865f9;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -50,6 +50,20 @@ header {
     grid-gap: 20px;
     box-sizing: border-box;
     padding: 10px 70px;
+}
+
+#products-container::-webkit-scrollbar {
+    width: 15px;
+}
+
+#products-container::-webkit-scrollbar-thumb {
+    background: #6270ea;
+    background-clip: padding-box;
+    border: 3px solid rgba(0, 0, 0, 0);
+}
+
+#products-container::-webkit-scrollbar-track {
+    background: lightgray;
 }
 
 @media screen and (max-width: 1000px) {
