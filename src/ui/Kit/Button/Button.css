@@ -1,0 +1,20 @@
+button {
+    width: 100%;
+    height: 50px;
+    font-size: 16px;
+    line-height: 16px;
+    border-radius: 50px;
+    border: none;
+    background: white;
+    box-sizing: border-box;
+    padding: 5px;
+}
+
+.pr {
+    background: rebeccapurple;
+    color: white;
+}
+
+.sec {
+    border: 3px solid rebeccapurple;
+}

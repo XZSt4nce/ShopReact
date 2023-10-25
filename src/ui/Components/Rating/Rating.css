@@ -1,0 +1,26 @@
+.rating {
+    width: 100%;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    user-select: none;
+}
+
+.rating-stars {
+    color: dimgray;
+    height: 30px;
+    font-size: 30px;
+    line-height: 30px;
+    text-align: center;
+    position: absolute;
+}
+
+.rating-mask {
+    color: gold;
+    -webkit-mask-image: -webkit-gradient(linear, 0% 0%, 100% 0%, from(rgba(0,0,0,1)), to(rgba(0,0,0,1)));
+    -webkit-mask-repeat: no-repeat;
+
+    mask-image: linear-gradient(to right, rgba(0, 0, 0, 1), rgba(0, 0, 0, 1));
+    mask-repeat: no-repeat;
+}
