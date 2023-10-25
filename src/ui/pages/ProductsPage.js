@@ -3,6 +3,7 @@ import TodoService from "../../services/ProductsService";
 import {Product} from "../Components/Product/Product";
 import {Button} from "../Kit/Button/Button";
 import "./ProductsPage.css";
+import {Sidebar} from "../Components/Sidebar/Sidebar";
 
 const ProductsPage = () => {
     const [products, setProducts] = useState([]);
@@ -38,6 +39,7 @@ const ProductsPage = () => {
                     {"Products"}
                 </div>
             </header>
+            <Sidebar leftPos={"0"}/>
             <div id={"products-container"} className={"container"}>
                 {visibleProducts.map((el, idx) => (
                     <Product key={idx} product={el}></Product>
