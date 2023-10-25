@@ -12,10 +12,10 @@ button {
 }
 
 .pr {
-    background: #6270ea;
+    background: rgb(69, 74, 117);
     color: white;
 }
 
 .sec {
-    border: 3px solid #6270ea;
+    border: 3px solid rgb(69, 74, 117);
 }
