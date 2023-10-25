@@ -45,22 +45,27 @@ header {
 }
 
 #products-container {
-    min-width: 340px;
     display: grid;
-    grid-template-columns: repeat(3, minmax(200px, 1fr));
-    grid-gap: 50px;
+    grid-template-columns: repeat(3, minmax(100px, 1fr));
+    grid-gap: 20px;
     box-sizing: border-box;
-    padding: 10px 30px;
+    padding: 10px 70px;
 }
 
 @media screen and (max-width: 1000px) {
     #products-container {
-        grid-template-columns: repeat(2, minmax(200px, 1fr));
+        grid-template-columns: repeat(2, minmax(100px, 1fr));
     }
 }
 
 @media screen and (max-width: 700px) {
     #products-container {
-        grid-template-columns: minmax(200px, 1fr);
+        grid-template-columns: minmax(100px, 1fr);
+    }
+}
+
+@media screen and (max-width: 340px) {
+    #products-container {
+        padding: 10px 0;
     }
 }

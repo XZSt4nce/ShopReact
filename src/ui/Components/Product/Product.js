@@ -1,5 +1,4 @@
 import "./Product.css";
-import React from 'react';
 import {Rating} from "../Rating/Rating";
 
 export const Product = ({ product }) => {

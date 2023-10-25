@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import TodoService from "../../services/ProductsService";
 import {Product} from "../Components/Product/Product";
 import {Button} from "../Kit/Button/Button";
