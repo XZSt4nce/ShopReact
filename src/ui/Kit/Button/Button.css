@@ -1,22 +1,32 @@
 button {
     width: 100%;
-    height: 50px;
+    height: 40px;
     font-size: 16px;
     line-height: 16px;
-    border-radius: 50px;
+    border-radius: 40px;
     border: none;
     background: white;
     box-sizing: border-box;
     padding: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 0 10px #00000066;
+    margin-top: 10px;
     margin-bottom: 10px;
 }
 
 .pr {
-    background: rgb(69, 74, 117);
+    background: #454A75;
     color: white;
 }
 
 .sec {
-    border: 3px solid rgb(69, 74, 117);
+    border: 3px solid #454A75;
+}
+
+.close {
+    background: red;
+    width: 30px;
+    height: 30px;
+    border-radius: 30px;
+    margin-left: auto;
+    margin-top: 0;
 }

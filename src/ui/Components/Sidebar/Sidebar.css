@@ -24,16 +24,39 @@ aside {
     font-weight: bold;
 }
 
+#cart-products {
+    width: 100%;
+    display: grid;
+    grid-template-columns: minmax(100px, 1fr);
+    grid-gap: 5px;
+    box-sizing: border-box;
+    padding: 5px;
+    overflow: auto;
+    margin-bottom: 10px;
+}
+
+#cart-products::-webkit-scrollbar {
+    width: 10px;
+}
+
+#cart-products::-webkit-scrollbar-thumb {
+    background: #454A75;
+    background-clip: padding-box;
+    border: 2px solid transparent;
+}
+
+#cart-products::-webkit-scrollbar-track {
+    background: lightgray;
+}
+
 #order-price {
     width: 100%;
     background: white;
     font-weight: bold;
     font-size: 20px;
-    margin-top: auto;
-    margin-bottom: 10px;
     padding-top: 5px;
     padding-bottom: 5px;
+    margin-top: auto;
     border-radius: 25px;
     text-align: center;
-    user-select: text;
 }
