@@ -1,4 +1,4 @@
-import "./cartAmount.css";
+import "./CartAmount.css";
 
 export const CartAmount = ({ count, onClick }) => {
     return (

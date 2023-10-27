@@ -1,7 +1,8 @@
 import "./Product.css";
-import {Rating} from "../Rating/Rating";
+import {Rating} from "./Rating/Rating";
 import {Button} from "../../Kit/Button/Button";
-import {CartAmount} from "../cartAmount/cartAmount";
+import {CartAmount} from "../CartAmount/CartAmount";
+import {Price} from "../Price/Price";
 
 export const Product = ({ product, cart, isCart }) => {
     const changeProductCount = function(isIncrease) {
@@ -40,7 +41,7 @@ export const Product = ({ product, cart, isCart }) => {
             <p>({product.rating.count})</p>
             <h1 className={"title text-wrapper"}>{product.title}</h1>
             <p className={"description text-wrapper"}>{product.description}</p>
-            <p className={"price"}>{`${product.price}$`}</p>
+            <Price product={product} isCart={isCart}/>
             {isCart || product.isInCart ? <CartAmount count={product.cartCount} onClick={changeProductCount}/> : <Button text={"Add to cart"} onClick={addToCart} type={"pr"}/>}
         </div>
     );

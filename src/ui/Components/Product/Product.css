@@ -36,10 +36,3 @@
     white-space: nowrap;
     text-overflow: ellipsis;
 }
-
-.price {
-    width: 100%;
-    text-align: right;
-    font-weight: bold;
-    margin-bottom: 10px;
-}
