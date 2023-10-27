@@ -8,10 +8,7 @@ button {
     border: none;
     background: white;
     box-sizing: border-box;
-    padding: 5px;
     box-shadow: 0 0 10px #00000066;
-    margin-top: 10px;
-    margin-bottom: 10px;
     user-select: none;
     transition: 0.5s;
 }
@@ -40,5 +37,4 @@ button:active {
     min-height: 30px;
     border-radius: 30px;
     margin-left: auto;
-    margin-top: 0;
 }

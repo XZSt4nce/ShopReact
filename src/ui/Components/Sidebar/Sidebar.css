@@ -17,6 +17,7 @@ aside {
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
+    padding-bottom: 10px;
 }
 
 #hide {
@@ -78,6 +79,7 @@ aside {
     padding-top: 5px;
     padding-bottom: 5px;
     margin-top: auto;
+    margin-bottom: 10px;
     border-radius: 25px;
     text-align: center;
 }
