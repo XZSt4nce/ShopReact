@@ -40,6 +40,5 @@ canvas {
     position: absolute;
     bottom: 20px;
     right: 10px;
-    user-select: none;
     overflow: hidden;
 }
