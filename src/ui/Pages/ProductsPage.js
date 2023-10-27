@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react';
-import ProductsService from "../../services/ProductsService";
+import {ProductsService} from "../../Services/ProductsService";
 import "./ProductsPage.css";
 import {Sidebar} from "../Components/Sidebar/Sidebar";
 import {ProductsContainer} from "../Components/ProductsContainer/ProductsContainer";
@@ -16,24 +16,22 @@ const ProductsPage = () => {
         setOrderPrice: setOrderPrice
     }
     const [viewVisible, setViewVisible] = useState(true);
-    const [sidebarLeft, setSidebarLeft] = useState(0); // ToDo: Сделать кнопку открытия/закрытия sidebar
+    const [sidebarLeft, setSidebarLeft] = useState(-280);
 
     const viewMoreProducts = function() {
         const additionalProducts = products.slice(visibleProducts.length, visibleProducts.length + 6);
         setVisibleProducts([...visibleProducts, ...additionalProducts]);
-    }
 
-    useEffect(() => {
         if (products.length === visibleProducts.length) {
             setViewVisible(false);
         } else {
             setViewVisible(true);
         }
-    }, [visibleProducts]);
+    }
 
     useEffect(() => {
         (async () => {
-            await ProductsService.getPosts().then((data) => {
+            await ProductsService().then((data) => {
                 data.forEach((el, idx) => {
                     el.cartCount = 0;
                     el.isInCart = false;
@@ -52,7 +50,7 @@ const ProductsPage = () => {
                     {"Products"}
                 </div>
             </header>
-            <Sidebar orderPrice={orderPrice} sidebarLeft={sidebarLeft} cart={cart}/>
+            <Sidebar orderPrice={orderPrice} sidebarLeft={sidebarLeft} setSidebarLeft={setSidebarLeft} cart={cart}/>
             <ProductsContainer products={visibleProducts} visibleButton={viewVisible} cart={cart} viewMore={viewMoreProducts}/>
         </div>
     );

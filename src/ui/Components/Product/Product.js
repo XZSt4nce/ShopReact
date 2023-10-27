@@ -4,10 +4,15 @@ import {Button} from "../../Kit/Button/Button";
 import {CartAmount} from "../cartAmount/cartAmount";
 
 export const Product = ({ product, cart, isCart }) => {
-    const changeProductCount = function(count, isIncrease) {
+    const changeProductCount = function(isIncrease) {
         const newPrice = Number(cart.orderPrice) + product.price * (2 * isIncrease - 1);
         cart.setOrderPrice(Math.round(newPrice * 100) / 100);
         product.cartCount += 2 * isIncrease - 1;
+
+        if (product.cartCount === 0) {
+            product.isInCart = false;
+            cart.setProducts(cart.products.filter(el => el !== product));
+        }
     }
 
     const addToCart = function() {
@@ -15,14 +20,15 @@ export const Product = ({ product, cart, isCart }) => {
         product.isInCart = true;
         if (!found) {
             cart.setProducts([...cart.products, product]);
-            changeProductCount(1, true);
+            changeProductCount(true);
         }
     }
 
     const removeProduct = function() {
-        product.isInCart = false;
-        changeProductCount(product.cartCount, false);
+        const newPrice = Number(cart.orderPrice) - product.price * product.cartCount;
+        cart.setOrderPrice(Math.round(newPrice * 100) / 100);
         product.cartCount = 0;
+        product.isInCart = false;
         cart.setProducts(cart.products.filter(el => el !== product));
     }
 

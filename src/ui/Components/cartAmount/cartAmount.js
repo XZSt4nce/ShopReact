@@ -3,9 +3,9 @@ import "./cartAmount.css";
 export const CartAmount = ({ count, onClick }) => {
     return (
         <div className={"cartAmount"}>
-            <button onClick={() => onClick(1, false)}>-</button>
-            <p>{count}</p>
-            <button onClick={() => onClick(1, true)}>+</button>
+            <button className={"cartAmount-button"} onClick={() => onClick(false)}>-</button>
+            <p className={"cartAmount-p"}>{`${count}pc.`}</p>
+            <button className={"cartAmount-button"} onClick={() => onClick(true)}>+</button>
         </div>
     );
 };
