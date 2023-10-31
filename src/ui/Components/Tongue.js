@@ -1,4 +1,3 @@
-import "./Tongue.css";
 import {useEffect, useRef} from "react";
 
 export const Tongue = ({ w, h }) => {

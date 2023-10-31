@@ -1,6 +1,5 @@
-import "./Switch.css";
-import {Button} from "../../Kit/Button/Button";
-import {Tongue} from "../Tongue/Tongue";
+import {Button} from "../Kit/Button/Button";
+import {Tongue} from "./Tongue";
 
 const Switch = ({ sidebarLeft, setSidebarLeft, tongueTop, text, count }) => {
     const onClick = function() {
@@ -12,7 +11,7 @@ const Switch = ({ sidebarLeft, setSidebarLeft, tongueTop, text, count }) => {
     }
 
     return (
-        <div id={"switch-container"} style={{ top: `${tongueTop}px` }}>
+        <div id={"switch-container"} style={{ top: `${tongueTop}px`}}>
             <div id={"switch-box"}>
                 <Tongue w={"50"} h={"70"}/>
                 <Button id={"switch"} onClick={onClick} type={"sec"} text={text}/>

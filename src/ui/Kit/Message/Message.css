@@ -13,12 +13,3 @@
     transition: top 1s;
     opacity: 80%;
 }
-
-.success {
-    background: springgreen;
-}
-
-.error {
-    background: red;
-    color: white;
-}

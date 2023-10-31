@@ -1,9 +1,12 @@
-import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import ProductsPage from "../Pages/ProductsPage";
+import {ContextProvider} from "../../core/StateContext";
 
 function App() {
   return (
-    <ProductsPage />
+    <ContextProvider>
+        <ProductsPage/>
+    </ContextProvider>
   );
 }
 

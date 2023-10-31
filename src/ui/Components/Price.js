@@ -1,5 +1,3 @@
-import "./Price.css";
-
 export const Price = ({ isCart, product }) => {
     if (isCart) {
         return (
