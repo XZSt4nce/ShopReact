@@ -2,7 +2,7 @@ import {useContext, useEffect} from 'react';
 import "./ProductsPage.css";
 import {Cart} from "../Components/Cart";
 import {ProductsContainer} from "../Components/ProductsContainer";
-import {Message} from "../Kit/Message/Message";
+import {Message} from "../Kit/Message";
 import {StateContext} from "../../core/StateContext";
 import {Filter} from "../Components/Filter";
 

@@ -1,8 +1,7 @@
-import {Button} from "../Kit/Button/Button";
-import {Sidebar} from "../Kit/Sidebar/Sidebar";
+import {Sidebar} from "../Kit/Sidebar";
 import {useContext, useEffect, useState} from "react";
 import {StateContext} from "../../core/StateContext";
-import {Checkbox} from "../Kit/Checkbox/Checkbox";
+import {Checkbox} from "../Kit/Checkbox";
 
 export const Filter = () => {
     const [list, setList] =  useState(new Set());
@@ -23,12 +22,12 @@ export const Filter = () => {
     };
 
     const container = (
-        <form className={"container"} onSubmit={find}>
+        <form onSubmit={find}>
             <div className={"list"}>
                 {Array.from(list).map((el, idx) => <Checkbox key={idx} el={el} idx={idx}/>)}
             </div>
-            <Button id={"reset-filter"} inputType={"reset"} type={"sec"} text={"Reset"}/>
-            <Button inputType={"submit"} text={"Find"} type={"pr"}/>
+            <input className={"btn btn-secondary"} value={"Reset"} type={"reset"}/>
+            <input className={"btn btn-primary"} value={"Find"} type={"submit"}/>
         </form>
     );
 

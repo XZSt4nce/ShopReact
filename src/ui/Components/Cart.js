@@ -1,8 +1,8 @@
-import {Button} from "../Kit/Button/Button";
 import {Product} from "./Product";
-import {Sidebar} from "../Kit/Sidebar/Sidebar";
+import {Sidebar} from "../Kit/Sidebar";
 import {useContext, useState} from "react";
 import {StateContext} from "../../core/StateContext";
+import {Button} from "react-bootstrap";
 
 export const Cart = () => {
     const [sidebarLeft, setSidebarLeft] = useState(-280);
@@ -21,14 +21,14 @@ export const Cart = () => {
     }
 
     const container = (
-        <div className={"container"}>
-            <div className={"list"}>
+        <div>
+            <div>
                 {cartProducts.map((el, idx) => (
                     <Product key={`cart-${idx}`} product={el} isCart={true}/>
                 ))}
             </div>
-            <p id={"order-price"}>{`${orderPrice}$`}</p>
-            <Button text={"Order"} type={"pr"} onClick={order}/>
+            <p>{`${orderPrice}$`}</p>
+            <Button variant={"primary"} onClick={order}>Order</Button>
         </div>
     );
 

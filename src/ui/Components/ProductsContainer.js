@@ -1,3 +1,4 @@
+import "./ProductsContainer.css";
 import {Product} from "./Product";
 import {useContext, useEffect, useState} from "react";
 import {StateContext} from "../../core/StateContext";
@@ -22,7 +23,7 @@ export const ProductsContainer = () => {
     }, [visibleProducts]);
 
     return (
-        <div id={"products-container"} className={"container"}>
+        <div id={"products-container"} className={"w-100 d-grid"}>
             {visibleProducts.map((el, idx) => (
                 <Product key={idx} product={el}></Product>
             ))}

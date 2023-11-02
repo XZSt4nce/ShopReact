@@ -1,10 +1,10 @@
+import "./Product.css";
 import {Rating} from "./Rating";
-import {Button} from "react-bootstrap";
 import {CartAmount} from "./CartAmount";
 import {Price} from "./Price";
 import {useContext} from "react";
 import {StateContext} from "../../core/StateContext";
-import {Card, CloseButton} from "react-bootstrap";
+import {Button, Card, CloseButton} from "react-bootstrap";
 
 export const Product = ({ product, isCart }) => {
     const {orderPrice, setCartPrice, cartProducts, setCart} = useContext(StateContext);
@@ -35,29 +35,17 @@ export const Product = ({ product, isCart }) => {
         }
     }
 
-    // return (
-    //     <div className="product" style={{boxShadow: isCart ? "" : "0 0 10px #00000064"}}>
-    //         {isCart ? <Button type={"close"} onClick={removeProduct}/> : ""}
-    //         <img src={product.image} alt={""} className={"image"}></img>
-    //         <Rating rate={product.rating.rate}/>
-    //         <p>({product.rating.count})</p>
-    //         <h1 className={"title text-wrapper"}>{product.title}</h1>
-    //         <p className={"description text-wrapper"}>{product.description}</p>
-    //         <Price product={product} isCart={isCart}/>
-    //         {isCart || product.isInCart ? <CartAmount count={product.cartCount} onClick={changeProductCount}/> : <Button text={"Add to cart"} onClick={addToCart} type={"pr"}/>}
-    //     </div>
-    // );
     return (
-        <Card style={{width: "200px"}} bg={"light"} text={"dark"}>
+        <Card style={{width: "100%"}} bg={"light"} text={"dark"}>
             {isCart ? <CloseButton aria-label={"Delete"} variant={"red"} onClick={removeProduct} /> : ""}
-            <Card.Img variant={"top"} src={product.image} alt={"Cart image"}/>
+            <Card.Img src={product.image} alt={"Cart image"}/>
             <Rating rate={product.rating.rate}/>
-            <Card.Text>({product.rating.count})</Card.Text>
+            <Card.Text className={"text-center"}>({product.rating.count})</Card.Text>
             <Card.Body>
-                <Card.Title>{product.title}</Card.Title>
-                <Card.Text>{product.description}</Card.Text>
-                <Price product={product} isCart={isCart} />
-                {isCart || product.isInCart ? <CartAmount count={product.cartCount} onClick={changeProductCount}/> : <Button onClick={addToCart} variant={"primary"}>Add to cart</Button>}
+                <Card.Title className={"text-truncate"}>{product.title}</Card.Title>
+                <Card.Text className={"text-truncate"}>{product.description}</Card.Text>
+                <Price price={product.price} count={product.cartCount} isCart={isCart} />
+                {isCart || product.isInCart ? <CartAmount count={product.cartCount} onClick={changeProductCount}/> : <Button onClick={addToCart} variant={"primary"} style={{width: "100%"}}>Add to cart</Button>}
             </Card.Body>
         </Card>
     );

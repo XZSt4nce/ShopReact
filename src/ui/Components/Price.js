@@ -1,14 +1,15 @@
-export const Price = ({ isCart, product }) => {
+export const Price = ({ isCart, price, count }) => {
+
     if (isCart) {
         return (
-            <div className={"price"}>
-                <p>{`${product.price}$ x ${product.cartCount}pc.`}</p>
-                <p>{`= ${Math.round(product.price * product.cartCount * 100) / 100}$`}</p>
+            <div className={"text-right fw-bold"}>
+                <p>{`${price}$ x ${count}pc.`}</p>
+                <p>{`= ${Math.round(price * count * 100) / 100}$`}</p>
             </div>
         );
     } else {
         return (
-            <p className={"price"}>{`${product.price}$`}</p>
+            <p className={"text-right fw-bold"}>{`${price}$`}</p>
         );
     }
 };

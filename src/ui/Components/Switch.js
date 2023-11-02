@@ -1,5 +1,5 @@
-import {Button} from "../Kit/Button/Button";
 import {Tongue} from "./Tongue";
+import {Button} from "react-bootstrap";
 
 const Switch = ({ sidebarLeft, setSidebarLeft, tongueTop, text, count }) => {
     const onClick = function() {
@@ -11,11 +11,11 @@ const Switch = ({ sidebarLeft, setSidebarLeft, tongueTop, text, count }) => {
     }
 
     return (
-        <div id={"switch-container"} style={{ top: `${tongueTop}px`}}>
-            <div id={"switch-box"}>
+        <div style={{ top: `${tongueTop}px`}}>
+            <div>
                 <Tongue w={"50"} h={"70"}/>
-                <Button id={"switch"} onClick={onClick} type={"sec"} text={text}/>
-                {count > 0 ? <p id={"switch-count"}>{count}</p> : ""}
+                <Button id={"switch"} onClick={onClick} variant={"secondary"}>{text}</Button>
+                {count > 0 ? <p>{count}</p> : ""}
             </div>
         </div>
     );

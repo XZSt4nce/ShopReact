@@ -1,3 +1,4 @@
+import "./Rating.css";
 export const Rating = ({ rate }) => {
     const maskSize = rate / 5 * 100 + '%';
     return (

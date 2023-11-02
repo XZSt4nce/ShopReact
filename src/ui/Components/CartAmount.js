@@ -1,11 +1,9 @@
-import {Button} from "../Kit/Button/Button";
-
 export const CartAmount = ({ count, onClick }) => {
     return (
-        <div className={"cartAmount"}>
-            <Button type={"sec cartAmount-button"} text={"–"} onClick={() => onClick(false)}/>
-            <p className={"cartAmount-p"}>{`${count}pc.`}</p>
-            <Button type={"sec cartAmount-button"} text={"+"} onClick={() => onClick(true)}/>
+        <div className={"d-flex"}>
+            <button className={"btn btn-primary rounded-circle"} style={{width: "40px", height: "40px"}} onClick={() => onClick(false)}>–</button>
+            <p className={"text-center justify-content-center flex-grow-1 m-0"}>{`${count}pc.`}</p>
+            <button className={"btn btn-primary rounded-circle"} style={{width: "40px", height: "40px"}} onClick={() => onClick(true)}>+</button>
         </div>
     );
 };

@@ -1,6 +1,6 @@
 import "./Message.css";
 import {useContext} from "react";
-import {StateContext} from "../../../core/StateContext";
+import {StateContext} from "../../core/StateContext";
 import {Alert} from "react-bootstrap";
 
 export const Message = () => {
