@@ -13,7 +13,7 @@ const ProductsPage = () => {
     }, [selected]);
 
     return (
-        <div className={"w-100 h-100"}>
+        <div className={"vw-100 vh-100 d-flex flex-column"}>
             <Navbar className={"p-2 sticky-top"} style={{background: "#454A75"}}>
                 <Navbar.Brand className={"text-white user-select-none"}>Shop</Navbar.Brand>
                 <Navbar.Collapse className={"d-flex justify-content-end"}>

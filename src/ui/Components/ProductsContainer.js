@@ -1,7 +1,7 @@
 import {Product} from "./Product";
 import {useContext, useEffect, useState} from "react";
 import {StateContext} from "../../core/StateContext";
-import {Button} from "react-bootstrap";
+import {Button, Spinner} from "react-bootstrap";
 
 export const ProductsContainer = () => {
     const [visibleProducts, setVisibleProducts] = useState([]);
@@ -22,10 +22,11 @@ export const ProductsContainer = () => {
     }, [visibleProducts, products]);
 
     return (
-        <div className={"w-100 h-100 table-1 table-lg-2 table-xl-3 overflow-auto p-4"}>
+        <div className={"w-100 flex-grow-1 table-1 table-lg-2 table-xl-3 overflow-auto p-4"}>
             {visibleProducts.map((el, idx) => (
                 <Product key={idx} product={el}></Product>
             ))}
+            {products.length === 0 ? <Spinner animation={"border"} variant={"light"} className={"m-auto stretch-column"} /> : ""}
             { viewVisible ? <Button className={"w-100 mt-3 stretch-column"} onClick={viewMoreProducts} variant={"outline-secondary"}>View more</Button> : "" }
         </div>
     );
