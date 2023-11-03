@@ -1,4 +1,3 @@
-import "./Product.css";
 import {Rating} from "./Rating";
 import {CartAmount} from "./CartAmount";
 import {Price} from "./Price";
@@ -36,9 +35,9 @@ export const Product = ({ product, isCart }) => {
     }
 
     return (
-        <Card style={{width: "100%"}} bg={"light"} text={"dark"}>
+        <Card className={"w-100 p-2"} bg={"light"} text={"dark"}>
             {isCart ? <CloseButton aria-label={"Delete"} variant={"red"} onClick={removeProduct} /> : ""}
-            <Card.Img src={product.image} alt={"Cart image"}/>
+            <Card.Img className={"user-select-none object-fit-contain"} src={product.image} alt={"Cart image"} style={{height: "150px", mixBlendMode: "multiply"}}/>
             <Rating rate={product.rating.rate}/>
             <Card.Text className={"text-center"}>({product.rating.count})</Card.Text>
             <Card.Body>

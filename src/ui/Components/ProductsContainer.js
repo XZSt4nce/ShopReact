@@ -1,4 +1,3 @@
-import "./ProductsContainer.css";
 import {Product} from "./Product";
 import {useContext, useEffect, useState} from "react";
 import {StateContext} from "../../core/StateContext";
@@ -20,14 +19,14 @@ export const ProductsContainer = () => {
 
     useEffect(() => {
         setViewVisible(visibleProducts.length < products.length);
-    }, [visibleProducts]);
+    }, [visibleProducts, products]);
 
     return (
-        <div id={"products-container"} className={"w-100 d-grid"}>
+        <div className={"w-100 h-100 table-1 table-lg-2 table-xl-3 overflow-auto p-4"}>
             {visibleProducts.map((el, idx) => (
                 <Product key={idx} product={el}></Product>
             ))}
-            { viewVisible ? <Button id={"view"}  onClick={viewMoreProducts} variant={"secondary"}>View more</Button> : "" }
+            { viewVisible ? <Button className={"w-100 mt-3 stretch-column"} onClick={viewMoreProducts} variant={"outline-secondary"}>View more</Button> : "" }
         </div>
     );
 };

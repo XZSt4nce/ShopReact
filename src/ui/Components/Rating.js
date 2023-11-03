@@ -1,10 +1,9 @@
-import "./Rating.css";
 export const Rating = ({ rate }) => {
     const maskSize = rate / 5 * 100 + '%';
     return (
-        <div className={"rating"}>
+        <div className={"w-100 d-flex justify-content-center position-relative user-select-none"} style={{height: "30px"}}>
             <p className={"rating-stars"} style={{textShadow: "0 0 10px #00000066"}}>★★★★★</p>
-            <p className={"rating-stars rating-mask"} style={{maskSize: maskSize, WebkitMaskSize: maskSize}}>★★★★★</p>
+            <p className={"rating-stars mask"} style={{color: "gold", maskSize: maskSize, WebkitMaskSize: maskSize}}>★★★★★</p>
         </div>
     );
 };

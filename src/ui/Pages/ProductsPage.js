@@ -14,7 +14,7 @@ const ProductsPage = () => {
     }, [selected]);
 
     return (
-        <div className={"wrapper"}>
+        <div className={"w-100 h-100"}>
             <header>
                 <div id={"header-decoration"}>
                     {"Shop"}
