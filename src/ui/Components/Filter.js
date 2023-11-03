@@ -17,16 +17,15 @@ export const Filter = () => {
         ev.preventDefault();
         if (ev.type === "reset") {
             Array.from(ev.target.elements).forEach(el => el.checked = false);
-        } else {
-            // Adding selected categories titles to the filter
-            setSelectedFilters(Array.from(list).filter((el, idx) => ev.target.elements[idx].checked))
         }
+        // Adding selected categories titles to the filter
+        setSelectedFilters(Array.from(list).filter((el, idx) => ev.target.elements[idx].checked))
     };
 
     const container = (
         <Form onSubmit={find} onReset={find} className={"w-100 h-100 d-flex flex-column gap-3"}>
             <div className={""}>
-                {Array.from(list).map((el, idx) => <Form.Check type={"checkbox"} key={idx} label={el.toString()}  /> )}
+                {Array.from(list).map((el, idx) => <Form.Check type={"checkbox"} key={idx} id={`category-${idx}`} label={el.toString()}  /> )}
             </div>
             <Button className={"mt-auto"} variant={"outline-secondary"} type={"reset"}>Reset</Button>
             <Button variant={"primary"} type={"submit"}>Find</Button>
