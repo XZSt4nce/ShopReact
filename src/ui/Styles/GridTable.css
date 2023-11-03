@@ -1,0 +1,25 @@
+.stretch-column {
+    grid-column: 1 / -1;
+}
+
+.table-1 {
+    display: grid;
+    grid-gap: 1rem;
+    grid-template-columns: 1fr;
+}
+
+@media (min-width: 992px) {
+    .table-lg-2 {
+        display: grid;
+        grid-gap: 1rem;
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1200px) {
+    .table-xl-3 {
+        display: grid;
+        grid-gap: 1rem;
+        grid-template-columns: repeat(3, 1fr);
+    }
+}

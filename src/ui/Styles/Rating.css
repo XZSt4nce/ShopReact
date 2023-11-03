@@ -1,0 +1,16 @@
+.rating-stars {
+    color: dimgray;
+    height: 100%;
+    font-size: 30px;
+    line-height: 30px;
+    text-align: center;
+    position: absolute;
+    pointer-events: none;
+}
+
+.mask {
+    -webkit-mask-image: -webkit-gradient(linear, 0% 0%, 100% 0%, from(rgba(0,0,0,1)), to(rgba(0,0,0,1)));
+    -webkit-mask-repeat: no-repeat;
+    mask-image: linear-gradient(to right, rgba(0, 0, 0, 1), rgba(0, 0, 0, 1));
+    mask-repeat: no-repeat;
+}

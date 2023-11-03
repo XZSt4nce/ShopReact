@@ -1,15 +1,14 @@
-import Switch from "../Components/Switch";
-import {CloseButton} from "react-bootstrap";
+import {Offcanvas} from "react-bootstrap";
 
-export const Sidebar = ({sidebarLeft, setSidebarLeft, tongueTop, tongueSymbol, count, title, container}) => {
+export const Sidebar = ({title, container, show, setShow, placement="start"}) => {
     return (
-        <aside style={{ left: `${sidebarLeft}px`}}>
-            <div>
-                <Switch sidebarLeft={sidebarLeft} setSidebarLeft={setSidebarLeft} tongueTop={tongueTop} count={count} text={tongueSymbol}/>
-                <CloseButton aria-label={"Hide"} />
-                <h1 className={"title"}>{title}</h1>
+        <Offcanvas backdropClassName={"d-flex flex-column"} className={"px-2"} show={show} placement={placement} onHide={() => setShow(false)} style={{color: "white"}}>
+            <Offcanvas.Header closeButton>
+                <Offcanvas.Title>{title}</Offcanvas.Title>
+            </Offcanvas.Header>
+            <Offcanvas.Body className={"w-100 h-100"}>
                 {container}
-            </div>
-        </aside>
-    );
+            </Offcanvas.Body>
+        </Offcanvas>
+    )
 };

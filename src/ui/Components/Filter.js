@@ -1,12 +1,11 @@
 import {Sidebar} from "../Kit/Sidebar";
 import {useContext, useEffect, useState} from "react";
 import {StateContext} from "../../core/StateContext";
-import {Checkbox} from "../Kit/Checkbox";
+import {Button, Form} from "react-bootstrap";
 
 export const Filter = () => {
     const [list, setList] =  useState(new Set());
-    const [sidebarLeft, setSidebarLeft] = useState(-280);
-    const {products, selected, setSelectedFilters} = useContext(StateContext);
+    const {products, setSelectedFilters, filterShow, setShowFilter} = useContext(StateContext);
 
     useEffect(() => {
         products.forEach(el => {
@@ -16,30 +15,25 @@ export const Filter = () => {
 
     const find = function(ev) {
         ev.preventDefault();
-        const elements = ev.target.elements;
-        setSelectedFilters(Array.from(list).filter((el, idx) => elements[idx].checked))
-        console.log(selected);
+        if (ev.type === "reset") {
+            Array.from(ev.target.elements).forEach(el => el.checked = false);
+        } else {
+            // Adding selected categories titles to the filter
+            setSelectedFilters(Array.from(list).filter((el, idx) => ev.target.elements[idx].checked))
+        }
     };
 
     const container = (
-        <form onSubmit={find}>
-            <div className={"list"}>
-                {Array.from(list).map((el, idx) => <Checkbox key={idx} el={el} idx={idx}/>)}
+        <Form onSubmit={find} onReset={find} className={"w-100 h-100 d-flex flex-column gap-3"}>
+            <div className={""}>
+                {Array.from(list).map((el, idx) => <Form.Check type={"checkbox"} key={idx} label={el.toString()}  /> )}
             </div>
-            <input className={"btn btn-secondary"} value={"Reset"} type={"reset"}/>
-            <input className={"btn btn-primary"} value={"Find"} type={"submit"}/>
-        </form>
+            <Button className={"mt-auto"} variant={"outline-secondary"} type={"reset"}>Reset</Button>
+            <Button variant={"primary"} type={"submit"}>Find</Button>
+        </Form>
     );
 
     return (
-        <Sidebar
-            sidebarLeft={sidebarLeft}
-            setSidebarLeft={setSidebarLeft}
-            count={selected.size}
-            title={"Filter"}
-            tongueTop={200}
-            tongueSymbol={"🔎"}
-            container={container}
-        />
+        <Sidebar title={"Filter"} container={container} show={filterShow} setShow={setShowFilter} />
     );
 };

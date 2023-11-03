@@ -11,6 +11,8 @@ export const ContextProvider = ({ children }) => {
     const [type, setType] =  useState("");
     const [hidden, setHidden] =  useState(true);
     const [selected, setSelected] = useState([]);
+    const [cartShow, setCartShow] = useState(false);
+    const [filterShow, setFilterShow] = useState(false);
 
     const getProducts = async () => {
         await ProductsService().then((data) => {
@@ -53,6 +55,14 @@ export const ContextProvider = ({ children }) => {
         setSelected(filters);
     }
 
+    const setShowCart = (isShow) => {
+        setCartShow(isShow);
+    }
+
+    const setShowFilter = (isShow) => {
+        setFilterShow(isShow);
+    }
+
     const values = {
         products: products,
         getProducts: getProducts,
@@ -68,7 +78,11 @@ export const ContextProvider = ({ children }) => {
         msgHidden: hidden,
         setMsgHidden: setMsgHidden,
         selected: selected,
-        setSelectedFilters: setSelectedFilters
+        setSelectedFilters: setSelectedFilters,
+        cartShow: cartShow,
+        setShowCart: setShowCart,
+        filterShow: filterShow,
+        setShowFilter: setShowFilter
     }
 
     return (

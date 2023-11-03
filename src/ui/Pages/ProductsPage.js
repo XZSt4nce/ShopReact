@@ -1,13 +1,12 @@
 import {useContext, useEffect} from 'react';
-import "./ProductsPage.css";
 import {Cart} from "../Components/Cart";
 import {ProductsContainer} from "../Components/ProductsContainer";
-import {Message} from "../Kit/Message";
 import {StateContext} from "../../core/StateContext";
 import {Filter} from "../Components/Filter";
+import {Button, Nav, Navbar} from "react-bootstrap";
 
 const ProductsPage = () => {
-    const { getProducts, selected } = useContext(StateContext);
+    const { getProducts, selected, setShowCart, setShowFilter } = useContext(StateContext);
 
     useEffect(() => {
         getProducts();
@@ -15,14 +14,17 @@ const ProductsPage = () => {
 
     return (
         <div className={"w-100 h-100"}>
-            <header>
-                <div id={"header-decoration"}>
-                    {"Shop"}
-                </div>
-            </header>
-            <Message/>
-            <Cart/>
+            <Navbar className={"p-2 sticky-top"} style={{background: "#454A75"}}>
+                <Navbar.Brand className={"text-white user-select-none"}>Shop</Navbar.Brand>
+                <Navbar.Collapse className={"d-flex justify-content-end"}>
+                    <Nav className={"gap-2"}>
+                        <Button className={"h-100"} variant={"secondary"} onClick={() => setShowFilter(true)}>ᗊ︎</Button>
+                        <Button className={"h-100"} variant={"secondary"} onClick={() => setShowCart(true)}>≡</Button>
+                    </Nav>
+                </Navbar.Collapse>
+            </Navbar>
             <Filter/>
+            <Cart/>
             <ProductsContainer/>
         </div>
     );

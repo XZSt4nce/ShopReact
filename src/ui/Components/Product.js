@@ -34,10 +34,18 @@ export const Product = ({ product, isCart }) => {
         }
     }
 
+    const Close = function() {
+        return (
+            <div className={"w-100 d-flex justify-content-end"}>
+                <CloseButton aria-label={"Delete"} variant={"red"} onClick={removeProduct} />
+            </div>
+        )
+    }
+
     return (
-        <Card className={"w-100 p-2"} bg={"light"} text={"dark"}>
-            {isCart ? <CloseButton aria-label={"Delete"} variant={"red"} onClick={removeProduct} /> : ""}
-            <Card.Img className={"user-select-none object-fit-contain"} src={product.image} alt={"Cart image"} style={{height: "150px", mixBlendMode: "multiply"}}/>
+        <Card className={"w-100 p-2"} bg={"light"} text={"dark"} style={{minWidth: "156px"}}>
+            {isCart ? <Close/> : ""}
+            <Card.Img className={"user-select-none object-fit-contain pe-none"} src={product.image} alt={"Cart image"} style={{height: "150px", mixBlendMode: "multiply"}}/>
             <Rating rate={product.rating.rate}/>
             <Card.Text className={"text-center"}>({product.rating.count})</Card.Text>
             <Card.Body>
