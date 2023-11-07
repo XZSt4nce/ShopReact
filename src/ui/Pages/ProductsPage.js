@@ -4,6 +4,7 @@ import {ProductsContainer} from "../Components/ProductsContainer";
 import {StateContext} from "../../core/StateContext";
 import {Filter} from "../Components/Filter";
 import {Button, Nav, Navbar} from "react-bootstrap";
+import {HiOutlineMenuAlt3, HiFilter} from "react-icons/hi";
 
 const ProductsPage = () => {
     const { getProducts, selected, setShowCart, setShowFilter } = useContext(StateContext);
@@ -18,8 +19,8 @@ const ProductsPage = () => {
                 <Navbar.Brand className={"text-white user-select-none"}>Shop</Navbar.Brand>
                 <Navbar.Collapse className={"d-flex justify-content-end"}>
                     <Nav className={"gap-2"}>
-                        <Button className={"h-100"} variant={"secondary"} onClick={() => setShowFilter(true)}>ᗊ︎</Button>
-                        <Button className={"h-100"} variant={"secondary"} onClick={() => setShowCart(true)}>≡</Button>
+                        <Button className={"h-100"} variant={"secondary"} onClick={() => setShowFilter(true)}><HiFilter/>︎</Button>
+                        <Button className={"h-100"} variant={"secondary"} onClick={() => setShowCart(true)}><HiOutlineMenuAlt3/></Button>
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
