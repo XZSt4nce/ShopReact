@@ -37,7 +37,7 @@ export const Product = ({ product, isCart }) => {
     const Close = function() {
         return (
             <div className={"w-100 d-flex justify-content-end"}>
-                <CloseButton aria-label={"Delete"} variant={"red"} onClick={removeProduct} />
+                <CloseButton className={"rounded-circle"} style={{backgroundColor: "red"}} aria-label={"Delete"} onClick={removeProduct} />
             </div>
         )
     }
