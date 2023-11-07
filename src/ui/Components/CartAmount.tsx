@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-export const CartAmount = ({ count, onClick }) => {
+export const CartAmount = ({ count, onClick }: {count: number, onClick: (isIncrease: boolean) => void}) => {
     return (
         <div className={"d-flex flex-row align-items-center fw-bold"}>
             <button className={"btn btn-outline-secondary rounded-circle"} style={{width: "40px", height: "40px"}} onClick={() => onClick(false)}>–</button>

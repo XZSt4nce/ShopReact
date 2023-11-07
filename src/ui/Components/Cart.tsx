@@ -20,8 +20,8 @@ export const Cart = () => {
         setMsgHidden(false);
     }
 
-    const container = (
-        <div className={"w-100 h-100 d-flex flex-column"}>
+    return (
+        <Sidebar title={"Cart"} show={cartShow} setShow={setShowCart} placement={"end"}>
             {!msgHidden ? <Alert variant={msgType} onClose={() => setMsgHidden(true)} dismissible>{msgText}</Alert> : ""}
             <div className={"d-flex flex-column gap-2 overflow-auto mb-2"}>
                 {cartProducts.map((el, idx) => (
@@ -32,10 +32,6 @@ export const Cart = () => {
                 <Badge bg={"white"} text={"black"} className={"w-100"}>{`${orderPrice}$`}</Badge>
             </p>
             <Button className={"w-100"} variant={"primary"} onClick={order}>Order</Button>
-        </div>
-    );
-
-    return (
-        <Sidebar title={"Cart"} container={container} show={cartShow} setShow={setShowCart} placement={"end"} />
+        </Sidebar>
     );
 };

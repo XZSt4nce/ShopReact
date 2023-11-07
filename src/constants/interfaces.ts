@@ -26,12 +26,8 @@ interface IContextValues {
     setMsgType: Dispatch<SetStateAction<string>>;
     msgHidden: boolean;
     setMsgHidden: Dispatch<SetStateAction<boolean>>;
-    selected: string[];
-    setSelectedFilters: Dispatch<SetStateAction<string[]>>;
     cartShow: boolean;
     setShowCart: Dispatch<SetStateAction<boolean>>;
-    filterShow: boolean;
-    setShowFilter: Dispatch<SetStateAction<boolean>>;
 }
 
 export { IProduct, IContextValues };

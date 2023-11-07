@@ -1,26 +1,21 @@
-import {createContext, useState} from 'react';
+import {createContext, ReactNode, useState} from 'react';
 import { IProduct, IContextValues } from "../constants/interfaces";
 import {ProductsService} from "../Services/ProductsService";
 import * as React from 'react';
 
 export const StateContext = createContext({} as IContextValues)
 
-export const ContextProvider = ({ children }) => {
+export const ContextProvider = ({ children }: { children: ReactNode }) => {
     const [products, setProducts] = useState<IProduct[]>([]);
     const [cartProducts, setCartProducts] = useState<IProduct[]>([]);
     const [orderPrice, setOrderPrice] = useState(0);
     const [text, setText] = useState("");
     const [type, setType] =  useState("");
     const [hidden, setHidden] =  useState(true);
-    const [selected, setSelected] = useState<string[]>([]);
     const [cartShow, setCartShow] = useState(false);
-    const [filterShow, setFilterShow] = useState(false);
 
     const getProducts = async () => {
         await ProductsService().then((data) => {
-            if (selected.length > 0) {
-                data = data.filter((el: IProduct) => selected.includes(el.category));
-            }
             data.forEach((el: IProduct) => {
                 el.cartCount = 0;
                 el.isInCart = false;
@@ -53,17 +48,9 @@ export const ContextProvider = ({ children }) => {
         setHidden(isHidden);
     }
 
-    const setSelectedFilters = (filters: string[]) => {
-        setSelected(filters);
-    }
-
     const setShowCart = (isShow: boolean) => {
         setCartShow(isShow);
         setMsgHidden(true);
-    }
-
-    const setShowFilter = (isShow: boolean) => {
-        setFilterShow(isShow);
     }
 
     const values: IContextValues = {
@@ -80,12 +67,8 @@ export const ContextProvider = ({ children }) => {
         setMsgType: setMsgType,
         msgHidden: hidden,
         setMsgHidden: setMsgHidden,
-        selected: selected,
-        setSelectedFilters: setSelectedFilters,
         cartShow: cartShow,
         setShowCart: setShowCart,
-        filterShow: filterShow,
-        setShowFilter: setShowFilter
     }
 
     return (
