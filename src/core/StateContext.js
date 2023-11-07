@@ -57,6 +57,7 @@ export const ContextProvider = ({ children }) => {
 
     const setShowCart = (isShow) => {
         setCartShow(isShow);
+        setMsgHidden(true);
     }
 
     const setShowFilter = (isShow) => {
