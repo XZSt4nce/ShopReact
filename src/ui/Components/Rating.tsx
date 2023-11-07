@@ -1,3 +1,5 @@
+import * as React from 'react';
+
 export const Rating = ({ rate }) => {
     const maskSize = rate / 5 * 100 + '%';
     return (

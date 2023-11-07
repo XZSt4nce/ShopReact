@@ -3,6 +3,7 @@ import {Sidebar} from "../Kit/Sidebar";
 import {useContext} from "react";
 import {StateContext} from "../../core/StateContext";
 import {Alert, Badge, Button} from "react-bootstrap";
+import * as React from 'react';
 
 export const Cart = () => {
     const {orderPrice, cartProducts, setMsgHidden, setMsgType, setMsgText, msgHidden, msgText, msgType, cartShow, setShowCart} = useContext(StateContext);

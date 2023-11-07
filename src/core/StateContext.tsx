@@ -1,25 +1,27 @@
 import {createContext, useState} from 'react';
+import { IProduct, IContextValues } from "../constants/interfaces";
 import {ProductsService} from "../Services/ProductsService";
+import * as React from 'react';
 
-export const StateContext = createContext({})
+export const StateContext = createContext({} as IContextValues)
 
 export const ContextProvider = ({ children }) => {
-    const [products, setProducts] = useState([]);
-    const [cartProducts, setCartProducts] = useState([]);
+    const [products, setProducts] = useState<IProduct[]>([]);
+    const [cartProducts, setCartProducts] = useState<IProduct[]>([]);
     const [orderPrice, setOrderPrice] = useState(0);
     const [text, setText] = useState("");
     const [type, setType] =  useState("");
     const [hidden, setHidden] =  useState(true);
-    const [selected, setSelected] = useState([]);
+    const [selected, setSelected] = useState<string[]>([]);
     const [cartShow, setCartShow] = useState(false);
     const [filterShow, setFilterShow] = useState(false);
 
     const getProducts = async () => {
         await ProductsService().then((data) => {
             if (selected.length > 0) {
-                data = data.filter(el => selected.includes(el.category));
+                data = data.filter((el: IProduct) => selected.includes(el.category));
             }
-            data.forEach((el) => {
+            data.forEach((el: IProduct) => {
                 el.cartCount = 0;
                 el.isInCart = false;
             });
@@ -27,44 +29,44 @@ export const ContextProvider = ({ children }) => {
         });
     }
 
-    const setListProducts = (products) => {
+    const setListProducts = (products: IProduct[]) => {
         setProducts(products);
     };
 
-    const setCart = (products) => {
+    const setCart = (products: IProduct[]) => {
         setCartProducts(products);
     };
 
-    const setCartPrice = (price) => {
+    const setCartPrice = (price: number) => {
         setOrderPrice(price);
     };
 
-    const setMsgText = (text) => {
+    const setMsgText = (text: string) => {
         setText(text);
     }
 
-    const setMsgType = (type) => {
+    const setMsgType = (type: string) => {
         setType(type);
     }
 
-    const setMsgHidden = (isHidden) => {
+    const setMsgHidden = (isHidden: boolean) => {
         setHidden(isHidden);
     }
 
-    const setSelectedFilters = (filters) => {
+    const setSelectedFilters = (filters: string[]) => {
         setSelected(filters);
     }
 
-    const setShowCart = (isShow) => {
+    const setShowCart = (isShow: boolean) => {
         setCartShow(isShow);
         setMsgHidden(true);
     }
 
-    const setShowFilter = (isShow) => {
+    const setShowFilter = (isShow: boolean) => {
         setFilterShow(isShow);
     }
 
-    const values = {
+    const values: IContextValues = {
         products: products,
         getProducts: getProducts,
         setListProducts: setListProducts,

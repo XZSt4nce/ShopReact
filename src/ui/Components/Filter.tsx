@@ -1,10 +1,11 @@
 import {Sidebar} from "../Kit/Sidebar";
-import {useContext, useEffect, useState} from "react";
+import {SyntheticEvent, useContext, useEffect, useState} from "react";
 import {StateContext} from "../../core/StateContext";
 import {Button, Form} from "react-bootstrap";
+import * as React from 'react';
 
 export const Filter = () => {
-    const [list, setList] =  useState(new Set());
+    const [list, setList] =  useState(new Set<string>());
     const {products, setSelectedFilters, filterShow, setShowFilter} = useContext(StateContext);
 
     useEffect(() => {
@@ -13,13 +14,17 @@ export const Filter = () => {
         });
     }, [products]);
 
-    const find = function(ev) {
+    const find = function(ev: SyntheticEvent) {
         ev.preventDefault();
+        const checkboxInputElements = Array.from((ev.target as HTMLFormElement).elements);
+        console.log(checkboxInputElements);
         if (ev.type === "reset") {
-            Array.from(ev.target.elements).forEach(el => el.checked = false);
+            checkboxInputElements.forEach(el => (el as HTMLInputElement).checked = false);
+            setSelectedFilters([]);
+        } else {
+            // Adding selected categories titles to the filter
+            setSelectedFilters(Array.from(list).filter((el, idx) => (checkboxInputElements[idx] as HTMLInputElement).checked));
         }
-        // Adding selected categories titles to the filter
-        setSelectedFilters(Array.from(list).filter((el, idx) => ev.target.elements[idx].checked))
     };
 
     const container = (
@@ -33,6 +38,6 @@ export const Filter = () => {
     );
 
     return (
-        <Sidebar title={"Filter"} container={container} show={filterShow} setShow={setShowFilter} />
+        <Sidebar title={"Filter"} container={container} show={filterShow} setShow={setShowFilter} placement={"start"} />
     );
 };

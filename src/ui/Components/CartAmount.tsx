@@ -1,3 +1,5 @@
+import * as React from 'react';
+
 export const CartAmount = ({ count, onClick }) => {
     return (
         <div className={"d-flex flex-row align-items-center fw-bold"}>

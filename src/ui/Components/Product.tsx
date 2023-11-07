@@ -4,17 +4,20 @@ import {Price} from "./Price";
 import {useContext} from "react";
 import {StateContext} from "../../core/StateContext";
 import {Button, Card, CloseButton} from "react-bootstrap";
+import {IProduct} from "../../constants/interfaces";
+import * as React from 'react';
 
-export const Product = ({ product, isCart }) => {
+export const Product = ({ product, isCart = false }: {product: IProduct; isCart?: boolean;}) => {
     const {orderPrice, setCartPrice, cartProducts, setCart} = useContext(StateContext);
 
-    const changeProductCount = function(isIncrease) {
-        const newPrice = orderPrice + product.price * (2 * isIncrease - 1);
+    const changeProductCount = function(isIncrease: boolean) {
+        const k = isIncrease ?  1 : -1;
+        const newPrice = orderPrice + product.price * k;
         setCartPrice(Math.round(newPrice * 100) / 100);
-        product.cartCount += 2 * isIncrease - 1;
+        product.cartCount += k;
         if (product.cartCount === 0) {
             product.isInCart = false;
-            setCart(cartProducts.filter(el => el !== product));
+            setCart(cartProducts.filter((el: IProduct) => el !== product));
         }
     }
 
@@ -23,7 +26,7 @@ export const Product = ({ product, isCart }) => {
         setCartPrice(Math.round(newPrice * 100) / 100);
         product.cartCount = 0;
         product.isInCart = false;
-        setCart(cartProducts.filter(el => el !== product));
+        setCart(cartProducts.filter((el: IProduct) => el !== product));
     }
 
     const addToCart = function() {
