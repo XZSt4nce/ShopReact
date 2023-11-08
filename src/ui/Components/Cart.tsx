@@ -2,27 +2,23 @@ import {Product} from "./Product";
 import {Sidebar} from "../Kit/Sidebar";
 import {useContext} from "react";
 import {StateContext} from "../../core/StateContext";
-import {Alert, Badge, Button} from "react-bootstrap";
+import {Badge, Button} from "react-bootstrap";
 import * as React from 'react';
 
 export const Cart = () => {
-    const {orderPrice, cartProducts, setMsgHidden, setMsgType, setMsgText, msgHidden, msgText, msgType, cartShow, setShowCart} = useContext(StateContext);
+    const {orderPrice, cartProducts, cartShow, setCartShow, contract} = useContext(StateContext);
 
     const order = function() {
         if (cartProducts.length === 0) {
-            setMsgType("danger");
-            setMsgText("Cart is empty!");
+            // ToDo: error
         } else {
-            setMsgType("success");
-            setMsgText("Thanks for order!");
-            console.log(cartProducts);
+            // ToDo: success
+            contract.methods.buyProducts();
         }
-        setMsgHidden(false);
     }
 
     return (
-        <Sidebar title={"Cart"} show={cartShow} setShow={setShowCart} placement={"end"}>
-            {!msgHidden ? <Alert variant={msgType} onClose={() => setMsgHidden(true)} dismissible>{msgText}</Alert> : ""}
+        <Sidebar title={"Cart"} show={cartShow} setShow={setCartShow} placement={"end"}>
             <div className={"d-flex flex-column gap-2 overflow-auto mb-2"}>
                 {cartProducts.map((el, idx) => (
                     <Product key={`cart-${idx}`} product={el} isCart={true}/>

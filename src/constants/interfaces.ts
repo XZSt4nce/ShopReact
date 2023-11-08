@@ -1,4 +1,5 @@
-import {Dispatch, SetStateAction} from "react";
+import { Dispatch, SetStateAction } from "react";
+import {Contract} from "web3";
 
 interface IProduct {
     id: number;
@@ -13,21 +14,22 @@ interface IProduct {
 }
 
 interface IContextValues {
+    sender: string;
+    contract: Contract<any>;
+    signIn: (login: string, password: string) => Promise<void>;
+    signUp: (login: string, password: string) => Promise<void>;
     products: IProduct[];
     getProducts: () => Promise<void>;
-    setListProducts: Dispatch<SetStateAction<IProduct[]>>;
     cartProducts: IProduct[];
-    setCart: Dispatch<SetStateAction<IProduct[]>>;
+    addToCart: (product: IProduct) => void;
+    changeProductCount: (product: IProduct, isIncrease: boolean) => void;
+    removeFromCart: (product: IProduct) => void;
     orderPrice: number;
-    setCartPrice: Dispatch<SetStateAction<number>>;
-    msgText: string;
-    setMsgText: Dispatch<SetStateAction<string>>;
-    msgType: string;
-    setMsgType: Dispatch<SetStateAction<string>>;
-    msgHidden: boolean;
-    setMsgHidden: Dispatch<SetStateAction<boolean>>;
+    updateOrderPrice: Dispatch<SetStateAction<number>>;
     cartShow: boolean;
-    setShowCart: Dispatch<SetStateAction<boolean>>;
+    setCartShow: Dispatch<SetStateAction<boolean>>;
+    modalShow: boolean;
+    setModalShow: Dispatch<SetStateAction<boolean>>;
 }
 
 export { IProduct, IContextValues };
