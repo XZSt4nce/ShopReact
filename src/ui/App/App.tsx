@@ -1,16 +1,23 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import ProductsPage from "../Pages/ProductsPage";
 import {ContextProvider} from "../../core/StateContext";
 import * as React from 'react';
 import {Layout} from "../Components/Layout";
+import {BrowserRouter, Switch, Route} from "react-router-dom";
+import {Routes} from "../../constants/routes";
 
 function App() {
   return (
     <ContextProvider>
-        <Layout>
-            <ProductsPage/>
-        </Layout>
-    </ContextProvider>
+        <BrowserRouter>
+            <Switch>
+                <Layout>
+                    {Routes.map((el, idx) => (
+                        <Route path={el.path} key={idx} component={el.page} exact/>
+                    ))}
+                </Layout>
+            </Switch>
+        </BrowserRouter>
+  </ContextProvider>
   );
 }
 

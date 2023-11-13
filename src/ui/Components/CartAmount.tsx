@@ -9,7 +9,7 @@ export const CartAmount = ({ product }: {product: IProduct}) => {
     return (
         <div className={"d-flex flex-row align-items-center fw-bold"}>
             <button className={"btn btn-outline-secondary rounded-circle"} style={{width: "40px", height: "40px"}} onClick={() => changeProductCount(product, false)}>–</button>
-            <p className={"text-center flex-grow-1 m-0"}>{`${product.cartCount}pc.`}</p>
+            <p className={"text-center flex-grow-1 m-0"}>{`${product.count}pc.`}</p>
             <button className={"btn btn-outline-secondary rounded-circle"} style={{width: "40px", height: "40px"}} onClick={() => changeProductCount(product, true)}>+</button>
         </div>
     );

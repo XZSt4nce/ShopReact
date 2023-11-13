@@ -1,5 +1,4 @@
 import {useContext, useEffect} from 'react';
-import {Cart} from "../Components/Cart";
 import {ProductsContainer} from "../Components/ProductsContainer";
 import {StateContext} from "../../core/StateContext";
 import * as React from 'react';
@@ -8,12 +7,13 @@ const ProductsPage = () => {
     const { getProducts } = useContext(StateContext);
 
     useEffect(() => {
-        getProducts();
+        (async () => {
+            await getProducts();
+        })()
     }, []);
 
     return (
-        <div className={"d-flex flex-column"}>
-            <Cart/>
+        <div className={"d-flex flex-column flex-grow-1"}>
             <ProductsContainer/>
         </div>
     );

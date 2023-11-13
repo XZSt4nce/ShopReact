@@ -24,7 +24,7 @@ export const ProductsContainer = () => {
     }, [visibleProducts, products]);
 
     return (
-        <div className={"w-100 flex-grow-1 table-1 table-lg-2 table-xl-3 overflow-auto p-4"}>
+        <div className={"w-100 table-1 table-lg-2 table-xl-3 overflow-auto p-4"}>
             {visibleProducts.map((el, idx) => (
                 <Product key={idx} product={el} />
             ))}

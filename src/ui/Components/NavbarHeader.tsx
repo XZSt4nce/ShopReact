@@ -1,19 +1,26 @@
 import * as React from 'react';
-import {Button, Nav, Navbar} from "react-bootstrap";
-import {HiOutlineMenuAlt3} from "react-icons/hi";
-import {useContext} from "react";
+import {Badge, Button, Nav, Navbar} from "react-bootstrap";
+import {Link, useHistory} from "react-router-dom";
+import {useContext, useEffect} from "react";
 import {StateContext} from "../../core/StateContext";
+import {BsFillBasket3Fill} from "react-icons/bs";
 
 export const NavbarHeader = () => {
-    const { setCartShow } = useContext(StateContext);
+    const navigation = useHistory();
+    const {getBalance, balance, sender, currency, toEther} = useContext(StateContext);
+
+    useEffect(() => {
+        (async () => {
+            await getBalance();
+        })();
+    }, [sender]);
 
     return (
         <Navbar className={"w-100 p-2 sticky-top"} style={{background: "#454A75"}}>
-            <Navbar.Brand className={"text-white user-select-none"}>Shop</Navbar.Brand>
+            <Navbar.Brand><Link className={"text-white text-decoration-none user-select-none"} to={'/'}>Shop</Link></Navbar.Brand>
             <Nav className={"w-100 gap-2 d-flex justify-content-end"}>
-                <Button className={"h-100"} variant={"secondary"} ></Button>
-                <Button className={"h-100"} variant={"secondary"} ></Button>
-                <Button className={"h-100"} variant={"secondary"} onClick={() => setCartShow(true)}><HiOutlineMenuAlt3/></Button>
+                <Badge className={"d-flex align-items-center text-center  p-2"} bg={"light"} text={"dark"} >{`${toEther(balance)} ${currency}`}</Badge>
+                <Button className={"h-100"} variant={"secondary"} onClick={() => navigation.push('/cart')}><BsFillBasket3Fill/></Button>
             </Nav>
         </Navbar>
     );

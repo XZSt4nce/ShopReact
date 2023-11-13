@@ -21,13 +21,13 @@ export const Product = ({ product, isCart = false }: {product: IProduct; isCart?
     return (
         <Card className={"w-100 p-2"} bg={"light"} text={"dark"} style={{minWidth: "156px"}}>
             {isCart ? <Close/> : ""}
-            <Card.Img className={"user-select-none object-fit-contain pe-none"} src={product.image} alt={"Cart image"} style={{height: "150px", mixBlendMode: "multiply"}}/>
-            <Rating rate={product.rating.rate}/>
-            <Card.Text className={"text-center"}>({product.rating.count})</Card.Text>
+            <Card.Img className={"user-select-none object-fit-contain pe-none"} src={product.product.image} alt={"Cart image"} style={{height: "150px", mixBlendMode: "multiply"}}/>
+            <Rating rate={product.product.rateValue}/>
+            <Card.Text className={"text-center"}>{product.product.rateCount.toString()}</Card.Text>
             <Card.Body>
-                <Card.Title className={"text-truncate"}>{product.title}</Card.Title>
-                <Card.Text className={"text-truncate"}>{product.description}</Card.Text>
-                <Price price={product.price} count={product.cartCount} isCart={isCart} />
+                <Card.Title className={"text-truncate"}>{product.product.title}</Card.Title>
+                <Card.Text className={"text-truncate"}>{product.product.description}</Card.Text>
+                <Price price={product.product.price} count={product.count} isCart={isCart} />
                 {isCart || product.isInCart ? <CartAmount product={product} /> : <Button onClick={() => addToCart(product)} variant={"primary"} style={{width: "100%"}}>Add to cart</Button>}
             </Card.Body>
         </Card>

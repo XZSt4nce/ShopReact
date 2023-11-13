@@ -36,8 +36,8 @@
       "balance": "100000000000000000000"
     }
   },
-  "gasValue": "0x200",
-  "gasLimit": "30000000",
-  "difficulty": "0x200",
-  "nonce": "0x002"
+  "nonce": "0x200",
+  "gasValue": "0x100",
+  "gasLimit": "0x3000000",
+  "difficulty": "0x0"
 }
