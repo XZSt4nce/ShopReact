@@ -1,5 +1,5 @@
-import { Dispatch, SetStateAction } from "react";
-import {Contract, MatchPrimitiveType} from "web3";
+import {JSX} from "react";
+import {MatchPrimitiveType} from "web3";
 import BigNumber from "bignumber.js";
 import {productBN, productMPT} from "./types";
 
@@ -15,10 +15,9 @@ interface ICartProduct {
 }
 
 interface IContextValues {
-    currency: string;
+    currency: JSX.Element;
     toEther: (wei: BigNumber) => BigNumber;
     sender: string;
-    contract: Contract<any>;
     signIn: (login: string, password: string) => Promise<void>;
     signUp: (login: string, password: string) => Promise<void>;
     balance: BigNumber,
@@ -30,10 +29,7 @@ interface IContextValues {
     changeProductCount: (product: IProduct, isIncrease: boolean) => void;
     removeFromCart: (product: IProduct) => void;
     orderPrice: BigNumber;
-    updateOrderPrice: Dispatch<SetStateAction<BigNumber>>;
-    buyProducts: () => void;
-    modalShow: boolean;
-    setModalShow: Dispatch<SetStateAction<boolean>>;
+    order: (privateKey: string) => void;
 }
 
 export { IProduct, ICartProduct, IContextValues };

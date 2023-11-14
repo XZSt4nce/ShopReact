@@ -1,70 +1,40 @@
 import * as React from 'react';
 import {createContext, ReactNode, useState} from 'react';
 import {ICartProduct, IContextValues, IProduct} from "../constants/interfaces";
-import {Web3Service} from "../Services/Web3Service";
+import {toEther, getBal} from "../Services/Web3Service";
 import BigNumber from "bignumber.js";
-import {productBN, productMPT} from "../constants/types";
+import {productMPT} from "../constants/types";
+import {FaEthereum} from "react-icons/fa";
+import {Address} from "web3";
+import {buyProducts, getProds, logIn, register} from "../Services/ContractService";
 
 export const StateContext = createContext({} as IContextValues)
 
-const contractAddress = "0xEDc14C6B15C23dbad117C9264E7e2D5eB70d4D3C";
-const abi = [{"inputs":[{"components":[{"internalType":"string","name":"title","type":"string"},{"internalType":"uint256","name":"price","type":"uint256"},{"internalType":"string","name":"description","type":"string"},{"internalType":"string","name":"category","type":"string"},{"internalType":"string","name":"image","type":"string"},{"internalType":"uint8","name":"rateValue","type":"uint8"},{"internalType":"uint256","name":"rateCount","type":"uint256"}],"internalType":"struct IShop.Product[]","name":"initProducts","type":"tuple[]"}],"stateMutability":"nonpayable","type":"constructor"},{"inputs":[{"components":[{"internalType":"string","name":"title","type":"string"},{"internalType":"uint256","name":"price","type":"uint256"},{"internalType":"string","name":"description","type":"string"},{"internalType":"string","name":"category","type":"string"},{"internalType":"string","name":"image","type":"string"},{"internalType":"uint8","name":"rateValue","type":"uint8"},{"internalType":"uint256","name":"rateCount","type":"uint256"}],"internalType":"struct IShop.Product[]","name":"newProducts","type":"tuple[]"}],"name":"addProducts","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"components":[{"components":[{"internalType":"string","name":"title","type":"string"},{"internalType":"uint256","name":"price","type":"uint256"},{"internalType":"string","name":"description","type":"string"},{"internalType":"string","name":"category","type":"string"},{"internalType":"string","name":"image","type":"string"},{"internalType":"uint8","name":"rateValue","type":"uint8"},{"internalType":"uint256","name":"rateCount","type":"uint256"}],"internalType":"struct IShop.Product","name":"product","type":"tuple"},{"internalType":"uint256","name":"count","type":"uint256"}],"internalType":"struct IShop.CartProduct[]","name":"cartProducts","type":"tuple[]"}],"name":"buyProducts","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[],"name":"getOwnProducts","outputs":[{"components":[{"components":[{"internalType":"string","name":"title","type":"string"},{"internalType":"uint256","name":"price","type":"uint256"},{"internalType":"string","name":"description","type":"string"},{"internalType":"string","name":"category","type":"string"},{"internalType":"string","name":"image","type":"string"},{"internalType":"uint8","name":"rateValue","type":"uint8"},{"internalType":"uint256","name":"rateCount","type":"uint256"}],"internalType":"struct IShop.Product","name":"product","type":"tuple"},{"internalType":"uint256","name":"count","type":"uint256"}],"internalType":"struct IShop.CartProduct[]","name":"","type":"tuple[]"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getProducts","outputs":[{"components":[{"internalType":"string","name":"title","type":"string"},{"internalType":"uint256","name":"price","type":"uint256"},{"internalType":"string","name":"description","type":"string"},{"internalType":"string","name":"category","type":"string"},{"internalType":"string","name":"image","type":"string"},{"internalType":"uint8","name":"rateValue","type":"uint8"},{"internalType":"uint256","name":"rateCount","type":"uint256"}],"internalType":"struct IShop.Product[]","name":"","type":"tuple[]"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"string","name":"login","type":"string"},{"internalType":"string","name":"password","type":"string"}],"name":"signIn","outputs":[{"internalType":"address","name":"wallet","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"string","name":"login","type":"string"},{"internalType":"string","name":"password","type":"string"}],"name":"signUp","outputs":[],"stateMutability":"nonpayable","type":"function"}] as const;
-
 export const ContextProvider = ({ children }: { children: ReactNode }) => {
-    const web3 = Web3Service();
-    const contract = new web3.eth.Contract(abi, contractAddress);
-
-    const [sender, setSender] = useState("0x64Fa1246f748aCA9d8037A574F0342012041ec98");
+    const [sender, setSender] = useState<Address>("0x64Fa1246f748aCA9d8037A574F0342012041ec98");
     const [balance, setBalance] = useState(BigNumber(0));
     const [products, setProducts] = useState<IProduct[]>([]);
     const [cartProducts, setCartProducts] = useState<IProduct[]>([]);
     const [orderPrice, setOrderPrice] = useState(BigNumber(0));
-    const [modalShow, setModalShow] = useState(false);
-    const [currency] = useState("Ξ");
+    const [currency] = useState(<FaEthereum/>);
 
-    const toEther = (wei: BigNumber) => {
-        return BigNumber(web3.utils.fromWei(wei.toString(), 'ether'));
+    const getProducts = async () => {
+        await getProds(setProducts);
+    }
+
+    const getBalance = async () => {
+        await getBal(sender)
+            .then(balance => setBalance(BigNumber(balance.toString())))
     }
 
     const signIn = async (login: string, password: string) => {
-        contract.methods.signIn(login, password).call({from: sender})
+        await logIn(login, password)
             .then(address => setSender(address));
     }
 
     const signUp = async (login: string, password: string) => {
-        await web3.eth.personal.newAccount(password)
+        await register(login, password)
             .then(address => setSender(address));
-        await web3.eth.personal.unlockAccount(sender, password, 0)
-            .then(() => contract.methods.signUp(login, password).send({from: sender}));
-    }
-
-    const getBalance = async () => {
-        await web3.eth.getBalance(sender)
-            .then(bal => setBalance(BigNumber(bal.toString())));
-    }
-
-    const getProducts = async () => {
-        await contract.methods.getProducts().call().then((data) => {
-            const products:  IProduct[] = [];
-            data.forEach((el: productMPT) => {
-                const product: productBN = {
-                    title: el.title,
-                    price: BigNumber(el.price.toString()),
-                    description: el.description,
-                    category: el.category,
-                    image: el.image,
-                    rateValue: Number(el.rateValue),
-                    rateCount: BigNumber(el.rateCount.toString())
-                };
-
-                products.push({
-                    product: product,
-                    count: BigNumber(0),
-                    isInCart: false
-                });
-            });
-            setProducts(products);
-        });
     }
 
     const addToCart = (product: IProduct) => {
@@ -77,7 +47,7 @@ export const ContextProvider = ({ children }: { children: ReactNode }) => {
     }
 
     const changeProductCount = (product: IProduct, isIncrease: boolean) => {
-        const k = isIncrease ?  1 : -1;
+        const k = isIncrease ? 1 : -1;
         updateOrderPrice(product.product.price.multipliedBy(k));
         product.count = product.count.plus(k);
         if (product.count.isZero()) {
@@ -97,7 +67,7 @@ export const ContextProvider = ({ children }: { children: ReactNode }) => {
         setOrderPrice(orderPrice.plus(price))
     };
 
-    const buyProducts = async () => {
+    const order = async (privateKey: string) => {
         const cart: ICartProduct[] = cartProducts.map(el => {
             const { isInCart, ...product } = el;
 
@@ -111,14 +81,13 @@ export const ContextProvider = ({ children }: { children: ReactNode }) => {
 
             return productStrings;
         });
-        await contract.methods.buyProducts(cart).send({from: sender, value: orderPrice.toString()});
+        await buyProducts(cart, privateKey, orderPrice);
     }
 
     const values: IContextValues = {
         currency: currency,
         toEther: toEther,
         sender: sender,
-        contract: contract,
         signIn: signIn,
         signUp: signUp,
         balance: balance,
@@ -130,10 +99,7 @@ export const ContextProvider = ({ children }: { children: ReactNode }) => {
         changeProductCount: changeProductCount,
         removeFromCart: removeFromCart,
         orderPrice: orderPrice,
-        updateOrderPrice: updateOrderPrice,
-        buyProducts: buyProducts,
-        modalShow: modalShow,
-        setModalShow: setModalShow
+        order: order,
     }
 
     return (

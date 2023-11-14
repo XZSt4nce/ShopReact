@@ -1,10 +1,9 @@
 import * as React from 'react';
-import {useContext} from "react";
-import {StateContext} from "../../core/StateContext";
+import {useState} from "react";
 import {Button, Modal} from "react-bootstrap";
 
 export const PopUp = ({ title, text, action=null, actionText }: {title: string, text: string, action?: any, actionText?: string}) => {
-    const { modalShow, setModalShow } = useContext(StateContext);
+    const [modalShow, setModalShow] = useState(true);
 
     return (
         <Modal show={modalShow} centered onHide={() => setModalShow(false)}>

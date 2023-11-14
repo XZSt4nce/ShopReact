@@ -9,13 +9,13 @@ export const Price = ({ isCart, price, count }: {isCart: boolean,  price: BigNum
     if (isCart) {
         return (
             <div className={"text-end fw-bold"}>
-                <p className={"m-0"}>{`${price}${currency} x ${count}pc.`}</p>
-                <p className={"m-2"}>{`= ${price.multipliedBy(count)}${currency}`}</p>
+                <p className={"m-0"}>{`${price}`}{currency}{` x ${count}pc.`}</p>
+                <p className={"mb-2"}>{`= ${price.multipliedBy(count)}`}{currency}</p>
             </div>
         );
     } else {
         return (
-            <p className={"text-end fw-bold mb-2"}>{`${price}${currency}`}</p>
+            <p className={"text-end fw-bold mb-2"}>{`${price}`}{currency}</p>
         );
     }
 };
