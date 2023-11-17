@@ -3,9 +3,6 @@ package-lock.json
 yarn.lock
 .idea
 
-# geth network
-/network/geth
-
 # dependencies
 /node_modules
 /.pnp

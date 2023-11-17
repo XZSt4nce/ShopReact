@@ -1,7 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {ContextProvider} from "../../core/StateContext";
 import * as React from 'react';
-import {Layout} from "../Components/Layout";
+import {LayoutHOC} from "../Components/LayoutHOC";
 import {BrowserRouter, Switch, Route} from "react-router-dom";
 import {Routes} from "../../constants/routes";
 
@@ -10,11 +10,11 @@ function App() {
     <ContextProvider>
         <BrowserRouter>
             <Switch>
-                <Layout>
+                <LayoutHOC>
                     {Routes.map((el, idx) => (
                         <Route path={el.path} key={idx} component={el.page} exact/>
                     ))}
-                </Layout>
+                </LayoutHOC>
             </Switch>
         </BrowserRouter>
   </ContextProvider>

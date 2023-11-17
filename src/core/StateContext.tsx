@@ -1,55 +1,59 @@
 import * as React from 'react';
 import {createContext, ReactNode, useState} from 'react';
-import {ICartProduct, IContextValues, IProduct} from "../constants/interfaces";
-import {toEther, getBal} from "../Services/Web3Service";
-import BigNumber from "bignumber.js";
-import {productMPT} from "../constants/types";
+import {IContextValues, IProduct} from "../constants/interfaces";
 import {FaEthereum} from "react-icons/fa";
-import {Address} from "web3";
-import {buyProducts, getProds, logIn, register} from "../Services/ContractService";
+import ProductsService from "../Services/ProductsService";
+import BN from "bn.js";
 
 export const StateContext = createContext({} as IContextValues)
 
 export const ContextProvider = ({ children }: { children: ReactNode }) => {
-    const [sender, setSender] = useState<Address>("0x64Fa1246f748aCA9d8037A574F0342012041ec98");
-    const [balance, setBalance] = useState(BigNumber(0));
+    const [sender, setSender] = useState("");
+    const [balance, setBalance] = useState(new BN(0));
     const [products, setProducts] = useState<IProduct[]>([]);
     const [cartProducts, setCartProducts] = useState<IProduct[]>([]);
-    const [orderPrice, setOrderPrice] = useState(BigNumber(0));
+    const [orderPrice, setOrderPrice] = useState(new BN(0));
     const [currency] = useState(<FaEthereum/>);
 
     const getProducts = async () => {
-        await getProds(setProducts);
-    }
-
-    const getBalance = async () => {
-        await getBal(sender)
-            .then(balance => setBalance(BigNumber(balance.toString())))
+        await ProductsService.getProds(setProducts);
     }
 
     const signIn = async (login: string, password: string) => {
-        await logIn(login, password)
-            .then(address => setSender(address));
+        await ProductsService.logIn(login, password)
+            .then((address: string) => setSender(address));
     }
 
-    const signUp = async (login: string, password: string) => {
-        await register(login, password)
-            .then(address => setSender(address));
+    const signUp = async (address: string, login: string, password: string) => {
+        await ProductsService.register(address, login, password)
+            .then(() => setSender(address));
+    }
+
+    const getBalance = async () => {
+        await ProductsService.getBalance(sender)
+            .then((balance: string) => setBalance(new BN(balance)))
+            .catch(console.log);
+    }
+
+    const logOut = () => {
+        setSender("");
+        setCartProducts([]);
+        setOrderPrice(new BN(0));
     }
 
     const addToCart = (product: IProduct) => {
         if (!product.isInCart) {
             product.isInCart = true;
-            product.count = BigNumber(1);
+            product.count = new BN(1);
             setCartProducts([...cartProducts, product]);
-            updateOrderPrice(product.product.price);
+            updateOrderPrice(product.price);
         }
     }
 
     const changeProductCount = (product: IProduct, isIncrease: boolean) => {
-        const k = isIncrease ? 1 : -1;
-        updateOrderPrice(product.product.price.multipliedBy(k));
-        product.count = product.count.plus(k);
+        const k = isIncrease ? new BN(1) : new BN(-1);
+        updateOrderPrice(product.price.mul(k));
+        product.count = product.count.add(k);
         if (product.count.isZero()) {
             product.isInCart = false;
             setCartProducts(cartProducts.filter((el: IProduct) => el !== product));
@@ -57,39 +61,40 @@ export const ContextProvider = ({ children }: { children: ReactNode }) => {
     }
 
     const removeFromCart = (product: IProduct) => {
-        updateOrderPrice(product.product.price.negated().multipliedBy(product.count));
-        product.count = BigNumber(0);
+        updateOrderPrice(product.price.neg().mul(product.count));
+        product.count = new BN(0);
         product.isInCart = false;
         setCartProducts(cartProducts.filter((el: IProduct) => el !== product));
     }
 
-    const updateOrderPrice = (price: BigNumber) => {
-        setOrderPrice(orderPrice.plus(price))
+    const updateOrderPrice = (price: BN) => {
+        setOrderPrice(orderPrice.add(price))
     };
 
-    const order = async (privateKey: string) => {
-        const cart: ICartProduct[] = cartProducts.map(el => {
-            const { isInCart, ...product } = el;
-
-            const productStrings = {} as ICartProduct;
-            productStrings.product = {} as productMPT;
-            productStrings.product.title = "title";
-            Object.keys(product.product).forEach((key: string) => {
-                productStrings.product[key] = product.product[key].toString();
-            });
-            productStrings.count = product.count.toString();
-
-            return productStrings;
+    const buyProducts = async () => {
+        console.log(cartProducts, sender, orderPrice.toString());
+        const cart = [];
+        cart.forEach((el) => {
+            const {isInCart, price, ...product} = el;
+            cart.push({...product, price: price.toString()});
         });
-        await buyProducts(cart, privateKey, orderPrice);
+        if (cartProducts.length > 0) {
+            await ProductsService.buyProducts(cartProducts, sender, orderPrice)
+                .catch(console.log);
+        }
+    }
+
+    const buyProductsGas = async () => {
+        return await ProductsService.estimateBuyProductsGas(cartProducts, sender);
     }
 
     const values: IContextValues = {
         currency: currency,
-        toEther: toEther,
+        toEther: ProductsService.toEther,
         sender: sender,
         signIn: signIn,
         signUp: signUp,
+        logOut: logOut,
         balance: balance,
         getBalance: getBalance,
         products: products,
@@ -99,7 +104,8 @@ export const ContextProvider = ({ children }: { children: ReactNode }) => {
         changeProductCount: changeProductCount,
         removeFromCart: removeFromCart,
         orderPrice: orderPrice,
-        order: order,
+        buyProducts: buyProducts,
+        buyProductsGas: buyProductsGas
     }
 
     return (

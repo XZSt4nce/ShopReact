@@ -5,19 +5,9 @@ import {Button, Spinner} from "react-bootstrap";
 import {IProduct} from "../../constants/interfaces";
 import * as React from 'react';
 
-export const ProductsContainer = () => {
-    const [visibleProducts, setVisibleProducts] = useState<IProduct[]>([]);
+export const ProductsContainer = ({ visibleProducts, onClick }: {visibleProducts: IProduct[], onClick: () => void}) => {
     const [viewVisible, setViewVisible] = useState(false);
     const {products} = useContext(StateContext);
-
-    const viewMoreProducts = function() {
-        const additionalProducts = products.slice(visibleProducts.length, visibleProducts.length + 9);
-        setVisibleProducts([...visibleProducts, ...additionalProducts]);
-    }
-
-    useEffect(() => {
-        setVisibleProducts(products.slice(0, 9));
-    }, [products]);
 
     useEffect(() => {
         setViewVisible(visibleProducts.length < products.length);
@@ -29,7 +19,7 @@ export const ProductsContainer = () => {
                 <Product key={idx} product={el} />
             ))}
             {products.length === 0 ? <Spinner animation={"border"} variant={"light"} className={"m-auto stretch-column"} /> : ""}
-            { viewVisible ? <Button className={"w-100 mt-3 stretch-column"} onClick={viewMoreProducts} variant={"outline-secondary"}>View more</Button> : "" }
+            { viewVisible ? <Button className={"w-100 mt-3 stretch-column"} onClick={onClick} variant={"outline-secondary"}>View more</Button> : "" }
         </div>
     );
 };

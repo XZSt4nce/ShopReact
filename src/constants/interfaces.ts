@@ -1,26 +1,26 @@
 import {JSX} from "react";
-import {MatchPrimitiveType} from "web3";
-import BigNumber from "bignumber.js";
-import {productBN, productMPT} from "./types";
+import BN from "bn.js";
 
 interface IProduct {
-    product: productBN;
-    count: BigNumber;
+    title: string;
+    price: BN;
+    description: string;
+    category: string;
+    image: string;
+    rateValue: number;
+    rateCount: BN;
+    count: BN;
     isInCart: boolean;
-}
-
-interface ICartProduct {
-    product: productMPT;
-    count: MatchPrimitiveType<"uint256", unknown>;
 }
 
 interface IContextValues {
     currency: JSX.Element;
-    toEther: (wei: BigNumber) => BigNumber;
+    toEther: (wei: BN) => string;
     sender: string;
-    signIn: (login: string, password: string) => Promise<void>;
-    signUp: (login: string, password: string) => Promise<void>;
-    balance: BigNumber,
+    signIn: (login: string, password: string) => Promise<any>;
+    signUp: (address: string, login: string, password: string) => Promise<void>;
+    logOut: () => void;
+    balance: BN,
     getBalance: () => Promise<void>;
     products: IProduct[];
     getProducts: () => Promise<void>;
@@ -28,8 +28,9 @@ interface IContextValues {
     addToCart: (product: IProduct) => void;
     changeProductCount: (product: IProduct, isIncrease: boolean) => void;
     removeFromCart: (product: IProduct) => void;
-    orderPrice: BigNumber;
-    order: (privateKey: string) => void;
+    orderPrice: BN;
+    buyProducts: () => void;
+    buyProductsGas: () => Promise<any>;
 }
 
-export { IProduct, ICartProduct, IContextValues };
+export { IProduct, IContextValues };
