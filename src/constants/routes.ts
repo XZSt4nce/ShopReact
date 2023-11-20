@@ -3,6 +3,7 @@ import {JSX} from "react";
 import CartPage from "../ui/Pages/CartPage";
 import LoginPage from "../ui/Pages/LoginPage";
 import RegisterPage from "../ui/Pages/RegisterPage";
+import MyProductsPage from "../ui/Pages/MyProductsPage";
 
 type route = {
     path: string;
@@ -25,5 +26,9 @@ export const Routes: route[] = [
     {
         path: "/cart",
         page: CartPage
+    },
+    {
+        path: "/myProducts",
+        page: MyProductsPage
     }
 ];

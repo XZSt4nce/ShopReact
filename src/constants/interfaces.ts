@@ -14,6 +14,9 @@ interface IProduct {
 }
 
 interface IContextValues {
+    orderVisible: boolean;
+    showOrder: () => void;
+    hideOrder: () => void;
     currency: JSX.Element;
     toEther: (wei: BN) => string;
     sender: string;
@@ -29,8 +32,8 @@ interface IContextValues {
     changeProductCount: (product: IProduct, isIncrease: boolean) => void;
     removeFromCart: (product: IProduct) => void;
     orderPrice: BN;
-    buyProducts: () => void;
-    buyProductsGas: () => Promise<any>;
+    buyProducts: () => Promise<void>;
+    getMyProducts: () => Promise<IProduct[]>;
 }
 
 export { IProduct, IContextValues };

@@ -4,6 +4,7 @@ import {Link, useHistory} from "react-router-dom";
 import {useContext, useEffect} from "react";
 import {StateContext} from "../../core/StateContext";
 import {BsFillBasket3Fill} from "react-icons/bs";
+import { BiSolidCabinet } from "react-icons/bi";
 
 export const NavbarHeader = () => {
     const {getBalance, balance, sender, currency, toEther, logOut} = useContext(StateContext);
@@ -29,10 +30,11 @@ export const NavbarHeader = () => {
     if (window.location.pathname !== "/" && window.location.pathname !== "/register") {
         return (
             <Navbar className={"w-100 p-2 sticky-top"} style={{background: "#454A75"}}>
-                <Navbar.Brand><Link className={"text-white text-decoration-none user-select-none"} to={'/products'}>Shop</Link></Navbar.Brand>
+                <Navbar.Brand><Link className={"text-white text-decoration-none user-select-none"} to={'/products'}>{`Shop${window.location.pathname}`}</Link></Navbar.Brand>
                 <Nav className={"w-100 gap-2 d-flex justify-content-end"}>
                     <Button className={"h-100"} variant={"secondary"} onClick={logOutPage}>Log Out</Button>
                     <Badge className={"d-flex align-items-center text-center"} bg={"light"} text={"dark"} >{`${toEther(balance)}`} {currency}</Badge>
+                    <Link className={buttonClass} to={"/myProducts"}><BiSolidCabinet /></Link>
                     <Link className={buttonClass} to={"/cart"}><BsFillBasket3Fill/></Link>
                 </Nav>
             </Navbar>

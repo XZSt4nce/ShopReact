@@ -14,32 +14,67 @@ export const ContextProvider = ({ children }: { children: ReactNode }) => {
     const [cartProducts, setCartProducts] = useState<IProduct[]>([]);
     const [orderPrice, setOrderPrice] = useState(new BN(0));
     const [currency] = useState(<FaEthereum/>);
+    const [orderVisible, setOrderVisible] = useState(false);
+
+    const showOrder = () => {
+        setOrderVisible(true);
+    };
+
+    const hideOrder = () => {
+        setOrderVisible(false);
+    }
+
+    const processProducts = (data) => {
+        const products:  IProduct[] = [];
+        data.forEach((el) => {
+            const product: IProduct = {
+                title: el.title,
+                price: ProductsService.web3.utils.toBN(el.price.toString()),
+                description: el.description,
+                category: el.category,
+                image: el.image,
+                rateValue: Number(el.rateValue),
+                rateCount: ProductsService.web3.utils.toBN(el.rateCount.toString()),
+                count: new BN(el.count),
+                isInCart: false
+            };
+            products.push(product);
+        });
+        return products;
+    };
 
     const getProducts = async () => {
-        await ProductsService.getProds(setProducts);
-    }
+        await ProductsService.getProducts()
+            .then((data) => {
+                setProducts(processProducts(data));
+            });
+    };
+
+    const getMyProducts = async (): Promise<IProduct[]> => {
+        return await ProductsService.getMyProducts(sender).then(processProducts);
+    };
 
     const signIn = async (login: string, password: string) => {
         await ProductsService.logIn(login, password)
             .then((address: string) => setSender(address));
-    }
+    };
 
     const signUp = async (address: string, login: string, password: string) => {
         await ProductsService.register(address, login, password)
             .then(() => setSender(address));
-    }
+    };
 
     const getBalance = async () => {
         await ProductsService.getBalance(sender)
             .then((balance: string) => setBalance(new BN(balance)))
             .catch(console.log);
-    }
+    };
 
     const logOut = () => {
         setSender("");
         setCartProducts([]);
         setOrderPrice(new BN(0));
-    }
+    };
 
     const addToCart = (product: IProduct) => {
         if (!product.isInCart) {
@@ -48,7 +83,7 @@ export const ContextProvider = ({ children }: { children: ReactNode }) => {
             setCartProducts([...cartProducts, product]);
             updateOrderPrice(product.price);
         }
-    }
+    };
 
     const changeProductCount = (product: IProduct, isIncrease: boolean) => {
         const k = isIncrease ? new BN(1) : new BN(-1);
@@ -58,37 +93,41 @@ export const ContextProvider = ({ children }: { children: ReactNode }) => {
             product.isInCart = false;
             setCartProducts(cartProducts.filter((el: IProduct) => el !== product));
         }
-    }
+    };
 
     const removeFromCart = (product: IProduct) => {
         updateOrderPrice(product.price.neg().mul(product.count));
         product.count = new BN(0);
         product.isInCart = false;
         setCartProducts(cartProducts.filter((el: IProduct) => el !== product));
-    }
+    };
 
     const updateOrderPrice = (price: BN) => {
         setOrderPrice(orderPrice.add(price))
     };
 
     const buyProducts = async () => {
-        console.log(cartProducts, sender, orderPrice.toString());
         const cart = [];
-        cart.forEach((el) => {
-            const {isInCart, price, ...product} = el;
-            cart.push({...product, price: price.toString()});
+        cartProducts.forEach((el) => {
+            const {isInCart, price, count, rateCount, ...product} = el;
+            cart.push({...product, price: price.toString(), count: count.toString(), rateCount: rateCount.toString()});
         });
-        if (cartProducts.length > 0) {
-            await ProductsService.buyProducts(cartProducts, sender, orderPrice)
+        if (cart.length > 0) {
+            await ProductsService.buyProducts(cart, sender, orderPrice)
+                .then(() => {
+                    setOrderVisible(true);
+                    setCartProducts([]);
+                    setOrderPrice(new BN(0));
+                })
                 .catch(console.log);
         }
-    }
-
-    const buyProductsGas = async () => {
-        return await ProductsService.estimateBuyProductsGas(cartProducts, sender);
-    }
+        await getBalance();
+    };
 
     const values: IContextValues = {
+        orderVisible: orderVisible,
+        showOrder: showOrder,
+        hideOrder: hideOrder,
         currency: currency,
         toEther: ProductsService.toEther,
         sender: sender,
@@ -105,7 +144,7 @@ export const ContextProvider = ({ children }: { children: ReactNode }) => {
         removeFromCart: removeFromCart,
         orderPrice: orderPrice,
         buyProducts: buyProducts,
-        buyProductsGas: buyProductsGas
+        getMyProducts: getMyProducts
     }
 
     return (

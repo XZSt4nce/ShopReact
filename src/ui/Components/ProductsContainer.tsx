@@ -1,13 +1,24 @@
 import {Product} from "./Product";
-import {useContext, useEffect, useState} from "react";
-import {StateContext} from "../../core/StateContext";
+import {useEffect, useState} from "react";
 import {Button, Spinner} from "react-bootstrap";
 import {IProduct} from "../../constants/interfaces";
 import * as React from 'react';
 
-export const ProductsContainer = ({ visibleProducts, onClick }: {visibleProducts: IProduct[], onClick: () => void}) => {
+export const ProductsContainer = ({ products }: {products: IProduct[]}) => {
+    const [visibleProducts, setVisibleProducts] = useState<IProduct[]>([]);
     const [viewVisible, setViewVisible] = useState(false);
-    const {products} = useContext(StateContext);
+    const [loading, setLoading] = useState(true);
+
+    const viewMoreProducts = () => {
+        const additionalProducts = products.slice(visibleProducts.length, visibleProducts.length + 6);
+        setVisibleProducts([...visibleProducts, ...additionalProducts]);
+    }
+
+    useEffect(() => {
+        setLoading(true);
+        setVisibleProducts(products.slice(0, 6));
+        setLoading(false);
+    }, [products]);
 
     useEffect(() => {
         setViewVisible(visibleProducts.length < products.length);
@@ -18,8 +29,8 @@ export const ProductsContainer = ({ visibleProducts, onClick }: {visibleProducts
             {visibleProducts.map((el, idx) => (
                 <Product key={idx} product={el} />
             ))}
-            {products.length === 0 ? <Spinner animation={"border"} variant={"light"} className={"m-auto stretch-column"} /> : ""}
-            { viewVisible ? <Button className={"w-100 mt-3 stretch-column"} onClick={onClick} variant={"outline-secondary"}>View more</Button> : "" }
+            { loading ? <Spinner animation={"border"} variant={"light"} className={"m-auto stretch-column"} /> : ""}
+            { viewVisible ? <Button className={"w-100 mt-3 stretch-column"} onClick={viewMoreProducts} variant={"outline-secondary"}>View more</Button> : "" }
         </div>
     );
 };
